@@ -29,3 +29,5 @@ release.properties
 .serverless
 # sam
 .aws-sam
+
+.DS_Store

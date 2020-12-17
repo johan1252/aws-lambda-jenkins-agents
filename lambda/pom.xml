@@ -11,7 +11,7 @@
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <jenkins.remoting.version>4.3</jenkins.remoting.version>
+    <jenkins.remoting.version>4.6</jenkins.remoting.version>
     <!-- ensure reproducible builds : https://maven.apache.org/guides/mini/guide-reproducible-builds.html
     use release plugin to update it -->
     <outputTimestamp>2020-04-19T19:00:00Z</outputTimestamp>
@@ -46,6 +46,11 @@
       <version>${jenkins.remoting.version}</version>
       <!-- <scope>provided</scope> -->
     </dependency>
+    <dependency>
+      <groupId>com.amazonaws</groupId>
+      <artifactId>aws-lambda-java-runtime-interface-client</artifactId>
+      <version>1.0.0</version>
+    </dependency>
   </dependencies>
 
   <build>
@@ -69,6 +74,16 @@
                   implementation="com.github.edwgiz.mavenShadePlugin.log4j2CacheTransformer.PluginsCacheFileTransformer">
                 </transformer>
               </transformers>
+              <filters>
+                  <filter>
+                      <artifact>*:*</artifact>
+                      <excludes>
+                          <exclude>META-INF/*.SF</exclude>
+                          <exclude>META-INF/*.DSA</exclude>
+                          <exclude>META-INF/*.RSA</exclude>
+                      </excludes>
+                  </filter>
+              </filters>
             </configuration>
           </execution>
         </executions>

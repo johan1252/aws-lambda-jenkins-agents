@@ -56,8 +56,10 @@ public class AgentHandler implements RequestHandler<Map<String, Object>, Respons
             String url = (String) event.get("url");
             String nodeName = (event.get("node_name") != null) ? (String) event.get("node_name") : "";
             String nodeSecret = (event.get("node_secret") != null) ? (String) event.get("node_secret") : "";
+
+            logger.warn(System.getProperty("java.class.path"));
             // real parameters for jenkins jnlp slave execution
-            command = "java -cp .:/opt/java/lib/* -Duser.home=" + HOME_DIR + " -Dhudson.remoting.Engine.socketTimeout=1000 -Dorg.jenkinsci.remoting.engine.JnlpProtocol3.disabled=true -Dhudson.remoting.SynchronousCommandTransport.failOnSocketTimeoutInReader=true hudson.remoting.jnlp.Main -noreconnect -headless -url " + url + " " + nodeSecret + " " + nodeName;
+            command = "java -cp .:./*:/opt/java/lib/* -Duser.home=" + HOME_DIR + " -Dhudson.remoting.Engine.socketTimeout=1000 -Dorg.jenkinsci.remoting.engine.JnlpProtocol3.disabled=true -Dhudson.remoting.SynchronousCommandTransport.failOnSocketTimeoutInReader=true hudson.remoting.jnlp.Main -noreconnect -headless -url " + url + " " + nodeSecret + " " + nodeName;
         } else {
             command = "/bin/ls -al";
         }
