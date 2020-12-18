@@ -1,0 +1,13 @@
+{
+  "name": "aws-lambda-jenkins-agents",
+  "version": "1.0.0",
+  "description": "*Companion repository of the [AWS Lambda Cloud Plugin for Jenkins](https://plugins.jenkins.io/aws-lambda-cloud/)*",
+  "main": "index.js",
+  "dependencies": {
+    "serverless": "^2.15.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "serverless": "serverless"
+  }
+}

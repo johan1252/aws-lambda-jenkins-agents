@@ -4,15 +4,16 @@ RUN apk add openjdk11
 
 # configure the build environment
 FROM base as build
-RUN apk add maven
+RUN apk add --no-cache maven
 WORKDIR /src
 
 # cache and copy dependencies
-ADD pom.xml .
+ADD lambda/pom.xml .
 RUN mvn dependency:go-offline dependency:copy-dependencies
 
 # compile the function
-ADD . .
+ADD lambda/ .
+
 RUN mvn package 
 
 # copy the function artifact and dependencies onto a clean base
@@ -22,7 +23,7 @@ WORKDIR /function
 COPY --from=build /src/target/dependency/*.jar ./
 COPY --from=build /src/target/*.jar ./
 
-#RUN apk add jq
+RUN apk add --no-cache jq
 
 # configure the runtime startup as main
 ENTRYPOINT [ "/usr/bin/java", "-cp", ".:./*:/opt/java/lib/*", "com.amazonaws.services.lambda.runtime.api.client.AWSLambda" ]
